@@ -30,6 +30,52 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
+  /* ══════════════════════════════════════
+     LOGIN SCREEN
+  ══════════════════════════════════════ */
+  #login-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, #1a6090 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #login-screen.hidden { display: none; }
+
+  .login-bg-pattern {
+    position: absolute; inset: 0; opacity: .06;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,.5) 40px, rgba(255,255,255,.5) 41px),
+                      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,.5) 40px, rgba(255,255,255,.5) 41px);
+  }
+  .login-box {
+    background: #fff; border-radius: 20px; padding: 40px 44px; width: 400px; max-width: 95vw;
+    box-shadow: 0 24px 80px rgba(0,0,0,.35); position: relative; z-index: 1;
+    animation: loginPop .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes loginPop { from { opacity:0; transform:scale(.85) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+  .login-logo { text-align: center; margin-bottom: 28px; }
+  .login-logo .llogo { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--navy); }
+  .login-logo .llogo span { color: var(--gold); }
+  .login-logo .lsub { font-size: 12px; color: var(--muted); letter-spacing: .5px; margin-top: 4px; }
+  .login-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; text-align:center; margin-bottom:24px; color:var(--text); }
+  .login-field { margin-bottom: 16px; }
+  .login-field label { display:block; font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+  .login-field input {
+    width:100%; padding:11px 16px; border:1.5px solid var(--border);
+    border-radius:10px; font-size:14px; font-family:'DM Sans',sans-serif;
+    color:var(--text); transition:border .2s;
+  }
+  .login-field input:focus { outline:none; border-color:var(--navy); }
+  .login-field input.err { border-color:var(--danger); }
+  #login-error { color:var(--danger); font-size:12px; text-align:center; margin-bottom:12px; display:none; font-weight:500; }
+  .login-btn {
+    width:100%; padding:13px; background:var(--navy); color:#fff;
+    border:none; border-radius:10px; font-family:'Syne',sans-serif;
+    font-size:15px; font-weight:700; cursor:pointer; transition:background .15s;
+    margin-top:4px;
+  }
+  .login-btn:hover { background:var(--navy-dark); }
+  .login-hint { margin-top:20px; padding:12px 16px; background:#F0F4F8; border-radius:10px; font-size:12px; color:var(--muted); border:1px solid var(--border); }
+  .login-hint strong { color:var(--navy); }
+
   /* ── HEADER ── */
   #header {
     position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
@@ -44,6 +90,27 @@
     background: var(--danger); color: #fff; font-size: 11px; font-weight: 600;
     padding: 3px 10px; border-radius: 20px; white-space: nowrap; display: none;
   }
+  /* User info in header */
+  #header-user {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.12); border-radius: 20px;
+    padding: 5px 12px; white-space: nowrap;
+  }
+  #header-user .u-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold); color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #header-user .u-name { font-size: 12px; color: #fff; font-weight: 500; }
+  #header-user .u-role { font-size: 10px; color: #85C1E9; }
+  #logout-btn {
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    color: #fff; font-size: 12px; padding: 5px 12px; border-radius: 20px;
+    cursor: pointer; font-family: 'DM Sans',sans-serif; font-weight: 500;
+    transition: background .15s; white-space: nowrap;
+  }
+  #logout-btn:hover { background: rgba(255,255,255,.25); }
 
   /* ── SIDEBAR ── */
   #sidebar {
@@ -128,6 +195,7 @@
   .badge-warn { background: var(--warn-light); color: var(--warn); }
   .badge-danger { background: var(--danger-light); color: var(--danger); }
   .badge-blue { background: #D6EAF8; color: var(--navy); }
+  .badge-gold { background: #FEF9E7; color: var(--warn); }
 
   /* ── VENTE PAGE ── */
   #vente-layout { display: grid; grid-template-columns: 1fr 340px; gap: 16px; min-height: 70vh; }
@@ -234,6 +302,28 @@
   .cat-chip:hover { border-color: var(--navy); color: var(--navy); }
   .cat-chip.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 
+  /* ── VENDEURS PAGE ── */
+  .vendor-card {
+    display: flex; align-items: center; gap: 14px;
+    padding: 16px 18px; border: 1.5px solid var(--border);
+    border-radius: 12px; background: #fff; margin-bottom: 10px;
+    transition: border-color .15s;
+  }
+  .vendor-card:hover { border-color: var(--navy-light); }
+  .vendor-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font-size: 18px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .vendor-info { flex: 1; }
+  .vendor-name { font-weight: 600; font-size: 15px; }
+  .vendor-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .vendor-actions { display: flex; gap: 6px; }
+  .vendor-card.inactive { opacity: .6; }
+  .vendor-card.inactive .vendor-avatar { background: var(--muted); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     :root { --sidebar-w: 0px; }
@@ -251,27 +341,53 @@
 </head>
 <body>
 
+<!-- ══════════════════════════════════════
+     ÉCRAN DE CONNEXION
+══════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-bg-pattern"></div>
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="llogo">🏪 <span>BLC</span> SERVICE</div>
+      <div class="lsub">INFORMATIQUE · PRÊT-À-PORTER · COSMÉTIQUE · TÉLÉPHONE · SUPÉRETTE</div>
+    </div>
+    <div class="login-title">🔐 Connexion</div>
+    <div class="login-field">
+      <label>Identifiant</label>
+      <input type="text" id="login-user" placeholder="Votre identifiant" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Mot de passe</label>
+      <input type="password" id="login-pass" placeholder="Votre mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="login-error">❌ Identifiant ou mot de passe incorrect</div>
+    <button class="login-btn" onclick="doLogin()">Se connecter →</button>
+    <div class="login-hint">
+      <strong>Connexion par défaut :</strong><br>
+      Admin : <strong>admin</strong> / <strong>admin123</strong>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <div id="header">
   <div class="logo">🏪 <span>BLC</span> SERVICE</div>
   <div class="subtitle">INFORMATIQUE · PRÊT-À-PORTER · COSMÉTIQUE · TÉLÉPHONE · SUPÉRETTE</div>
   <div id="alert-pill" class="alert-pill">⚠ 0 stocks faibles</div>
   <div id="clock">--:--:--</div>
+  <div id="header-user">
+    <div class="u-avatar" id="u-avatar">A</div>
+    <div>
+      <div class="u-name" id="u-name">—</div>
+      <div class="u-role" id="u-role">—</div>
+    </div>
+  </div>
+  <button id="logout-btn" onclick="doLogout()">⏏ Déconnexion</button>
 </div>
 
 <!-- SIDEBAR -->
 <div id="sidebar">
-  <div class="nav-section">Navigation</div>
-  <button class="nav-btn active" onclick="showPage('accueil',this)"><span class="icon">🏠</span> Accueil</button>
-  <button class="nav-btn" onclick="showPage('vente',this)"><span class="icon">🛒</span> Nouvelle Vente</button>
-  <div class="nav-divider"></div>
-  <div class="nav-section">Gestion</div>
-  <button class="nav-btn" onclick="showPage('ajout',this)"><span class="icon">➕</span> Ajouter Article</button>
-  <button class="nav-btn" onclick="showPage('inventaire',this)"><span class="icon">📦</span> Inventaire</button>
-  <div class="nav-divider"></div>
-  <div class="nav-section">Rapports</div>
-  <button class="nav-btn" onclick="showPage('stats',this)"><span class="icon">📊</span> Statistiques</button>
-  <button class="nav-btn" onclick="showPage('historique',this)"><span class="icon">📋</span> Historique Ventes</button>
+  <!-- Contenu généré dynamiquement selon le rôle -->
 </div>
 
 <!-- MAIN -->
@@ -283,25 +399,22 @@
     <div class="kpi-grid" id="kpi-grid"></div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-      <!-- Alertes stock -->
       <div class="card">
         <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;">⚠️ Alertes stock</div>
         <div id="alertes-list"><div style="color:var(--muted);font-size:13px;">Chargement...</div></div>
       </div>
-      <!-- Accès rapide catégories -->
       <div class="card">
         <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;">📂 Accès rapide</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="cat-quick"></div>
       </div>
     </div>
 
-    <!-- Ventes récentes -->
     <div class="card">
       <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:14px;">🧾 Dernières ventes</div>
       <div class="tbl-wrap">
         <table>
-          <thead><tr><th>Numéro</th><th>Heure</th><th>Total</th><th>Paiement</th><th>Statut</th></tr></thead>
-          <tbody id="recent-ventes-body"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Aucune vente</td></tr></tbody>
+          <thead><tr><th>Numéro</th><th>Heure</th><th>Total</th><th>Paiement</th><th>Vendeur</th><th>Statut</th></tr></thead>
+          <tbody id="recent-ventes-body"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Aucune vente</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -311,7 +424,6 @@
   <div class="page" id="page-vente">
     <div class="page-title">🛒 Nouvelle Vente</div>
     <div id="vente-layout">
-      <!-- Produits -->
       <div id="prod-panel">
         <div id="prod-top">
           <input type="text" id="vente-search" placeholder="🔍 Rechercher nom ou code-barre..." oninput="filtrerVente()">
@@ -327,7 +439,6 @@
         <div id="prod-grid"></div>
       </div>
 
-      <!-- Panier -->
       <div id="cart-panel">
         <div id="cart-header">
           <h3>🧾 Panier</h3>
@@ -405,7 +516,7 @@
   <div class="page" id="page-inventaire">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
       <div class="page-title" style="margin:0">📦 Inventaire</div>
-      <button class="btn btn-success" onclick="showPage('ajout',null);document.querySelector('.nav-btn:nth-child(4)').classList.add('active')">➕ Nouvel article</button>
+      <button class="btn btn-success" onclick="showPage('ajout',null)">➕ Nouvel article</button>
     </div>
     <div class="card" style="margin-bottom:14px;padding:12px 16px;">
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
@@ -429,10 +540,7 @@
     <div class="tbl-wrap">
       <table>
         <thead>
-          <tr>
-            <th>Nom</th><th>Catégorie</th><th>Code-barre</th>
-            <th>Qté</th><th>Prix unitaire</th><th>Statut</th><th>Actions</th>
-          </tr>
+          <tr><th>Nom</th><th>Catégorie</th><th>Code-barre</th><th>Qté</th><th>Prix unitaire</th><th>Statut</th><th>Actions</th></tr>
         </thead>
         <tbody id="inv-body"></tbody>
       </table>
@@ -454,6 +562,12 @@
         <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;">💳 Paiements par mode</div>
         <div id="stat-payments">Chargement...</div>
       </div>
+    </div>
+
+    <!-- Performance par vendeur -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;">👨‍💼 Performance par vendeur (ce mois)</div>
+      <div id="stat-vendeurs">Chargement...</div>
     </div>
 
     <div class="card">
@@ -480,16 +594,58 @@
           <option value="">Tous paiements</option>
           <option>Espèces</option><option>Orange Money</option><option>Wave</option><option>Chèque</option>
         </select>
-        <button class="btn btn-outline btn-sm" onclick="document.getElementById('hist-date').value='';document.getElementById('hist-pay').value='';reloadHist()">🔄 Reset filtres</button>
+        <select id="hist-vendeur" onchange="reloadHist()" style="padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;background:#fff;">
+          <option value="">Tous les vendeurs</option>
+        </select>
+        <button class="btn btn-outline btn-sm" onclick="resetFiltresHist()">🔄 Reset filtres</button>
       </div>
     </div>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Numéro</th><th>Date & Heure</th><th>Articles</th><th>Total</th><th>Paiement</th><th>Statut</th><th>Détail</th></tr></thead>
+        <thead><tr><th>Numéro</th><th>Date & Heure</th><th>Articles</th><th>Total</th><th>Paiement</th><th>Vendeur</th><th>Statut</th><th>Détail</th></tr></thead>
         <tbody id="hist-body"></tbody>
       </table>
     </div>
     <div id="hist-empty" style="display:none;text-align:center;color:var(--muted);padding:40px;font-size:14px;">Aucune vente trouvée</div>
+  </div>
+
+  <!-- ═══ GESTION VENDEURS (ADMIN ONLY) ═══ -->
+  <div class="page" id="page-vendeurs">
+    <div class="page-title">👥 Gestion des Vendeurs</div>
+
+    <!-- Formulaire création vendeur -->
+    <div class="card" style="max-width:560px;margin-bottom:24px;">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px;" id="vendeur-form-titre">➕ Nouveau vendeur</div>
+      <input type="hidden" id="v-edit-id">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nom complet *</label>
+          <input type="text" id="v-nom" placeholder="Ex: Aminata Diallo">
+        </div>
+        <div class="form-group">
+          <label>Identifiant (login) *</label>
+          <input type="text" id="v-login" placeholder="Ex: aminata" autocomplete="off">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Mot de passe *</label>
+          <input type="password" id="v-pass" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>Confirmer le mot de passe *</label>
+          <input type="password" id="v-pass2" placeholder="••••••••">
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:4px;">
+        <button class="btn btn-primary btn-lg" onclick="sauvegarderVendeur()">💾 Enregistrer</button>
+        <button class="btn btn-outline" onclick="resetVendeurForm()">🔄 Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- Liste des vendeurs -->
+    <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:14px;">📋 Liste des comptes</div>
+    <div id="vendeurs-list"></div>
   </div>
 
 </div><!-- /main -->
@@ -512,7 +668,7 @@
 
 <script>
 // ═══════════════════════════════════════
-//  STORAGE (localStorage comme BDD)
+//  STORAGE
 // ═══════════════════════════════════════
 const DB = {
   getArticles: () => JSON.parse(localStorage.getItem('blc_articles') || '[]'),
@@ -521,7 +677,122 @@ const DB = {
   setVentes:   (v) => localStorage.setItem('blc_ventes', JSON.stringify(v)),
 };
 
-// Démo data si vide
+// ═══════════════════════════════════════
+//  AUTH — Gestion des utilisateurs
+// ═══════════════════════════════════════
+const AUTH = {
+  getUsers: () => JSON.parse(localStorage.getItem('blc_users') || '[]'),
+  setUsers: (u) => localStorage.setItem('blc_users', JSON.stringify(u)),
+  getSession: () => JSON.parse(sessionStorage.getItem('blc_session') || 'null'),
+  setSession: (u) => sessionStorage.setItem('blc_session', JSON.stringify(u)),
+  clearSession: () => sessionStorage.removeItem('blc_session'),
+  initUsers() {
+    const users = this.getUsers();
+    if (!users.find(u => u.username === 'admin')) {
+      users.unshift({ id: 1, username: 'admin', password: 'admin123', role: 'admin', nom: 'Administrateur', actif: true });
+      this.setUsers(users);
+    }
+  }
+};
+
+let currentUser = null;
+
+// ═══════════════════════════════════════
+//  LOGIN / LOGOUT
+// ═══════════════════════════════════════
+function doLogin() {
+  const username = document.getElementById('login-user').value.trim();
+  const password = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+
+  const users = AUTH.getUsers();
+  const user = users.find(u => u.username === username && u.password === password && u.actif);
+
+  if (!user) {
+    errEl.style.display = 'block';
+    document.getElementById('login-user').classList.add('err');
+    document.getElementById('login-pass').classList.add('err');
+    setTimeout(() => {
+      errEl.style.display = 'none';
+      document.getElementById('login-user').classList.remove('err');
+      document.getElementById('login-pass').classList.remove('err');
+    }, 3000);
+    return;
+  }
+
+  AUTH.setSession(user);
+  currentUser = user;
+  document.getElementById('login-screen').classList.add('hidden');
+  initApp();
+}
+
+function doLogout() {
+  if (!confirm('Voulez-vous vous déconnecter ?')) return;
+  AUTH.clearSession();
+  currentUser = null;
+  document.getElementById('login-screen').classList.remove('hidden');
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  // Reset sidebar
+  document.getElementById('sidebar').innerHTML = '';
+  // Reset page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-accueil').classList.add('active');
+}
+
+// ═══════════════════════════════════════
+//  INITIALISATION DE L'APP
+// ═══════════════════════════════════════
+function initApp() {
+  // Afficher infos utilisateur dans le header
+  document.getElementById('u-avatar').textContent = currentUser.nom.charAt(0).toUpperCase();
+  document.getElementById('u-name').textContent = currentUser.nom;
+  document.getElementById('u-role').textContent = currentUser.role === 'admin' ? '👑 Administrateur' : '🛒 Vendeur';
+
+  // Construire la sidebar selon le rôle
+  buildSidebar();
+
+  // Charger la bonne page par défaut
+  if (currentUser.role === 'admin') {
+    showPage('accueil', null);
+  } else {
+    showPage('vente', null);
+  }
+}
+
+function buildSidebar() {
+  const isAdmin = currentUser.role === 'admin';
+  let html = '';
+
+  if (isAdmin) {
+    html += `<div class="nav-section">Navigation</div>
+    <button class="nav-btn" onclick="showPage('accueil',this)"><span class="icon">🏠</span> Accueil</button>
+    <button class="nav-btn" onclick="showPage('vente',this)"><span class="icon">🛒</span> Nouvelle Vente</button>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Gestion</div>
+    <button class="nav-btn" onclick="showPage('ajout',this)"><span class="icon">➕</span> Ajouter Article</button>
+    <button class="nav-btn" onclick="showPage('inventaire',this)"><span class="icon">📦</span> Inventaire</button>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Rapports</div>
+    <button class="nav-btn" onclick="showPage('stats',this)"><span class="icon">📊</span> Statistiques</button>
+    <button class="nav-btn" onclick="showPage('historique',this)"><span class="icon">📋</span> Historique Ventes</button>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Administration</div>
+    <button class="nav-btn" onclick="showPage('vendeurs',this)"><span class="icon">👥</span> Gestion Vendeurs</button>`;
+  } else {
+    html += `<div class="nav-section">Caisse</div>
+    <button class="nav-btn active" onclick="showPage('vente',this)"><span class="icon">🛒</span> Nouvelle Vente</button>
+    <div class="nav-divider"></div>
+    <div class="nav-section">Mes ventes</div>
+    <button class="nav-btn" onclick="showPage('historique',this)"><span class="icon">📋</span> Mon Historique</button>`;
+  }
+
+  document.getElementById('sidebar').innerHTML = html;
+}
+
+// ═══════════════════════════════════════
+//  DÉMO DATA
+// ═══════════════════════════════════════
 function initData() {
   if (DB.getArticles().length) return;
   const demo = [
@@ -560,6 +831,12 @@ function toast(msg, err=false) {
 //  NAVIGATION
 // ═══════════════════════════════════════
 function showPage(id, btn) {
+  // Vérif accès selon rôle
+  const adminOnly = ['accueil','ajout','inventaire','stats','vendeurs'];
+  if (currentUser && currentUser.role !== 'admin' && adminOnly.includes(id)) {
+    toast('Accès réservé à l\'administrateur', true); return;
+  }
+
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
@@ -569,7 +846,8 @@ function showPage(id, btn) {
   if (id==='vente')   loadVenteProduits();
   if (id==='inventaire') reloadInv();
   if (id==='stats')   loadStats();
-  if (id==='historique') reloadHist();
+  if (id==='historique') { populateVendeurFilter(); reloadHist(); }
+  if (id==='vendeurs') reloadVendeurs();
 }
 
 // ═══════════════════════════════════════
@@ -604,12 +882,12 @@ function loadAccueil() {
     {label:'Articles total',val:arts.length,cls:'navy'},
     {label:'Critiques (<5)',val:arts.filter(a=>a.qte<5).length,cls:'danger'},
     {label:'Urgents (<10)',val:arts.filter(a=>a.qte>=5&&a.qte<10).length,cls:'warn'},
+    {label:'Vendeurs actifs',val:AUTH.getUsers().filter(u=>u.role==='vendeur'&&u.actif).length,cls:'navy'},
   ];
   document.getElementById('kpi-grid').innerHTML = kpis.map(k=>`
     <div class="kpi"><div class="kpi-label">${k.label}</div><div class="kpi-val ${k.cls}">${k.val}</div></div>
   `).join('');
 
-  // Alertes
   const alertes = arts.filter(a=>a.qte<10).sort((a,b)=>a.qte-b.qte).slice(0,8);
   document.getElementById('alertes-list').innerHTML = alertes.length
     ? alertes.map(a=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;">
@@ -618,14 +896,12 @@ function loadAccueil() {
       </div>`).join('')
     : '<div style="color:var(--success);font-size:13px;">✅ Tous les stocks sont OK</div>';
 
-  // Catégories rapides
   document.getElementById('cat-quick').innerHTML = Object.entries(CAT_EMOJI).map(([cat,em])=>`
     <button onclick="showPage('inventaire',null);setTimeout(()=>{document.getElementById('inv-cat').value='${cat}';reloadInv();},100)"
       style="padding:10px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);cursor:pointer;font-size:12px;font-weight:600;color:var(--navy);">
       ${em}<br>${cat}
     </button>`).join('');
 
-  // Ventes récentes
   const recentes = [...ventes].reverse().slice(0,8);
   document.getElementById('recent-ventes-body').innerHTML = recentes.length
     ? recentes.map(v=>`<tr>
@@ -633,9 +909,10 @@ function loadAccueil() {
         <td>${new Date(v.date).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</td>
         <td style="font-weight:700;color:var(--success);">${fmt(v.total)}</td>
         <td>${v.paiement}</td>
+        <td><span class="badge badge-blue">${v.vendeur||'—'}</span></td>
         <td><span class="badge badge-ok">✅ Payée</span></td>
       </tr>`).join('')
-    : '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px;">Aucune vente enregistrée</td></tr>';
+    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:20px;">Aucune vente enregistrée</td></tr>';
 
   checkAlerts();
 }
@@ -646,9 +923,7 @@ function loadAccueil() {
 let panier = [];
 let selPaiement = 'Espèces';
 
-function loadVenteProduits() {
-  filtrerVente();
-}
+function loadVenteProduits() { filtrerVente(); }
 
 function filtrerVente() {
   const search = document.getElementById('vente-search').value.toLowerCase();
@@ -759,10 +1034,11 @@ function validerVente() {
   const vente = {
     id: Date.now(), numero, date: new Date().toISOString(),
     items: panier.map(p=>({...p})),
-    sous_total:sub, remise:disc, total, paiement:selPaiement
+    sous_total:sub, remise:disc, total, paiement:selPaiement,
+    vendeur: currentUser ? currentUser.username : 'inconnu',
+    vendeurNom: currentUser ? currentUser.nom : 'Inconnu'
   };
 
-  // Décrémenter stock
   const arts = DB.getArticles();
   panier.forEach(p=>{
     const art = arts.find(a=>a.id===p.id);
@@ -774,11 +1050,9 @@ function validerVente() {
   ventes.push(vente);
   DB.setVentes(ventes);
 
-  // Afficher reçu
   lastVente = vente;
   showReceipt(vente);
 
-  // Reset panier
   panier = [];
   renderPanier();
   if (document.getElementById('discount-val')) document.getElementById('discount-val').value='';
@@ -800,7 +1074,8 @@ function showReceipt(v) {
     ${v.remise?`<div class="receipt-row"><span>Remise</span><span>-${fmt(v.remise)}</span></div>`:''}
     <div class="receipt-row" style="font-weight:700;"><span>TOTAL</span><span>${fmt(v.total)}</span></div>
     <div class="receipt-divider"></div>
-    <div style="text-align:center;font-size:11px;">Merci de votre visite !</div>`;
+    <div style="text-align:center;font-size:11px;">Vendeur : ${v.vendeurNom||v.vendeur}</div>
+    <div style="text-align:center;font-size:11px;margin-top:4px;">Merci de votre visite !</div>`;
   document.getElementById('modal-overlay').classList.add('open');
 }
 
@@ -821,6 +1096,7 @@ ${lastVente.items.map(i=>`${i.nom.padEnd(25)} x${i.qte}  ${fmt(i.total)}`).join(
 ---------------------------
 TOTAL: ${fmt(lastVente.total)}
 Paiement: ${lastVente.paiement}
+Vendeur: ${lastVente.vendeurNom||lastVente.vendeur}
 ---------------------------
        Merci de votre visite !
   </pre>`);
@@ -877,7 +1153,7 @@ function editArticle(id) {
   document.getElementById('f-qte').value = art.qte;
   document.getElementById('f-prix').value = art.prix;
   document.getElementById('ajout-titre').textContent = '✏️ Modifier l\'article';
-  showPage('ajout', document.querySelector('.nav-btn:nth-child(4)'));
+  showPage('ajout', null);
 }
 
 // ═══════════════════════════════════════
@@ -955,7 +1231,6 @@ function loadStats() {
     {label:'Ce mois',val:fmt(sum(vMois)),sub:`${vMois.length} vente(s)`,cls:'navy'},
   ].map(k=>`<div class="kpi"><div class="kpi-label">${k.label}</div><div class="kpi-val ${k.cls}">${k.val}</div><div style="font-size:11px;color:var(--muted);">${k.sub}</div></div>`).join('');
 
-  // Ventes par catégorie
   const catMap = {};
   vMois.forEach(v=>v.items.forEach(i=>{
     const art = DB.getArticles().find(a=>a.id===i.id);
@@ -972,7 +1247,6 @@ function loadStats() {
       </div>`).join('')
     : '<div style="color:var(--muted);font-size:13px;">Aucune vente ce mois</div>';
 
-  // Paiements
   const payMap = {};
   ventes.forEach(v=>payMap[v.paiement]=(payMap[v.paiement]||0)+1);
   const payEntries = Object.entries(payMap).sort((a,b)=>b[1]-a[1]);
@@ -986,7 +1260,31 @@ function loadStats() {
       </div>`).join('')
     : '<div style="color:var(--muted);font-size:13px;">Aucune donnée</div>';
 
-  // Top articles
+  // Performance par vendeur (ce mois)
+  const vendMap = {};
+  vMois.forEach(v=>{
+    const k = v.vendeur||'inconnu';
+    if (!vendMap[k]) vendMap[k] = {nom: v.vendeurNom||k, total:0, nb:0};
+    vendMap[k].total += v.total;
+    vendMap[k].nb++;
+  });
+  const vendEntries = Object.entries(vendMap).sort((a,b)=>b[1].total-a[1].total);
+  const maxVend = vendEntries.length ? vendEntries[0][1].total : 1;
+  document.getElementById('stat-vendeurs').innerHTML = vendEntries.length
+    ? `<div class="tbl-wrap"><table>
+        <thead><tr><th>#</th><th>Vendeur</th><th>Nb ventes</th><th>Chiffre d'affaires</th><th>Performance</th></tr></thead>
+        <tbody>${vendEntries.map(([,d],i)=>`<tr>
+          <td style="font-weight:700;color:var(--gold);">${i+1}</td>
+          <td><span class="badge badge-blue">👤 ${d.nom}</span></td>
+          <td style="font-weight:600;">${d.nb}</td>
+          <td style="font-weight:700;color:var(--success);">${fmt(d.total)}</td>
+          <td><div style="width:120px;height:8px;background:var(--border);border-radius:4px;overflow:hidden;">
+            <div style="width:${Math.round((d.total/maxVend)*100)}%;height:100%;background:var(--navy);border-radius:4px;"></div>
+          </div></td>
+        </tr>`).join('')}</tbody>
+      </table></div>`
+    : '<div style="color:var(--muted);font-size:13px;">Aucune vente ce mois</div>';
+
   const artMap = {};
   ventes.forEach(v=>v.items.forEach(i=>{
     if(!artMap[i.nom]) artMap[i.nom]={qte:0,total:0};
@@ -1006,12 +1304,44 @@ function loadStats() {
 // ═══════════════════════════════════════
 //  HISTORIQUE
 // ═══════════════════════════════════════
+function populateVendeurFilter() {
+  const sel = document.getElementById('hist-vendeur');
+  if (!sel) return;
+  const users = AUTH.getUsers();
+  const isAdmin = currentUser && currentUser.role === 'admin';
+  if (!isAdmin) { sel.style.display = 'none'; return; }
+  sel.innerHTML = '<option value="">Tous les vendeurs</option>';
+  users.forEach(u => {
+    const opt = document.createElement('option');
+    opt.value = u.username;
+    opt.textContent = u.nom + (u.role==='admin'?' (Admin)':' (Vendeur)');
+    sel.appendChild(opt);
+  });
+}
+
+function resetFiltresHist() {
+  document.getElementById('hist-date').value='';
+  document.getElementById('hist-pay').value='';
+  const hv = document.getElementById('hist-vendeur');
+  if (hv) hv.value = '';
+  reloadHist();
+}
+
 function reloadHist() {
+  const isAdmin = currentUser && currentUser.role === 'admin';
   let ventes = [...DB.getVentes()].reverse();
+
+  // Vendeur ne voit que ses propres ventes
+  if (!isAdmin) {
+    ventes = ventes.filter(v => v.vendeur === currentUser.username);
+  }
+
   const date = document.getElementById('hist-date')?.value;
   const pay = document.getElementById('hist-pay')?.value;
+  const vendeurFilter = isAdmin ? document.getElementById('hist-vendeur')?.value : '';
   if (date) ventes = ventes.filter(v=>v.date.startsWith(date));
   if (pay) ventes = ventes.filter(v=>v.paiement===pay);
+  if (vendeurFilter) ventes = ventes.filter(v=>v.vendeur===vendeurFilter);
 
   const tbody = document.getElementById('hist-body');
   const empty = document.getElementById('hist-empty');
@@ -1023,6 +1353,7 @@ function reloadHist() {
     <td style="font-size:12px;color:var(--muted);">${v.items.map(i=>i.nom).join(', ').slice(0,40)}${v.items.length>1?'…':''}</td>
     <td style="font-weight:700;color:var(--success);">${fmt(v.total)}</td>
     <td>${v.paiement}</td>
+    <td><span class="badge badge-blue">${v.vendeurNom||v.vendeur||'—'}</span></td>
     <td><span class="badge badge-ok">✅ Payée</span></td>
     <td><button class="btn btn-outline btn-sm" onclick='showDetailVente(${JSON.stringify(v).replace(/'/g,"&#39;")})'>👁 Voir</button></td>
   </tr>`).join('');
@@ -1035,9 +1366,11 @@ function showDetailVente(v) {
 }
 
 function exportCSV() {
-  const ventes = DB.getVentes();
-  const rows = [['Numero','Date','Total','Paiement','Statut']];
-  ventes.forEach(v=>rows.push([v.numero, new Date(v.date).toLocaleString('fr-FR'), v.total, v.paiement, 'payée']));
+  const isAdmin = currentUser && currentUser.role === 'admin';
+  let ventes = DB.getVentes();
+  if (!isAdmin) ventes = ventes.filter(v => v.vendeur === currentUser.username);
+  const rows = [['Numero','Date','Total','Paiement','Vendeur','Statut']];
+  ventes.forEach(v=>rows.push([v.numero, new Date(v.date).toLocaleString('fr-FR'), v.total, v.paiement, v.vendeurNom||v.vendeur||'—', 'payée']));
   const csv = rows.map(r=>r.join(';')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
@@ -1047,11 +1380,137 @@ function exportCSV() {
 }
 
 // ═══════════════════════════════════════
-//  INIT
+//  GESTION DES VENDEURS (ADMIN)
 // ═══════════════════════════════════════
+function reloadVendeurs() {
+  const users = AUTH.getUsers();
+  const ventes = DB.getVentes();
+
+  document.getElementById('vendeurs-list').innerHTML = users.map(u => {
+    const nbVentes = ventes.filter(v => v.vendeur === u.username).length;
+    const totalVentes = ventes.filter(v => v.vendeur === u.username).reduce((s,v)=>s+v.total,0);
+    const isAdminUser = u.role === 'admin';
+    const isSelf = u.id === currentUser.id;
+
+    return `<div class="vendor-card ${u.actif?'':'inactive'}">
+      <div class="vendor-avatar" style="background:${isAdminUser?'var(--gold)':'var(--navy)'}">
+        ${u.nom.charAt(0).toUpperCase()}
+      </div>
+      <div class="vendor-info">
+        <div class="vendor-name">${u.nom}
+          ${isAdminUser ? '<span class="badge badge-gold" style="margin-left:6px;">👑 Admin</span>' : '<span class="badge badge-blue" style="margin-left:6px;">🛒 Vendeur</span>'}
+          ${!u.actif ? '<span class="badge badge-danger" style="margin-left:4px;">Inactif</span>' : ''}
+        </div>
+        <div class="vendor-meta">Login : <strong>${u.username}</strong> &nbsp;·&nbsp; ${nbVentes} vente(s) &nbsp;·&nbsp; CA : ${fmt(totalVentes)}</div>
+      </div>
+      <div class="vendor-actions">
+        ${!isAdminUser ? `<button class="btn btn-outline btn-sm" onclick="editVendeur(${u.id})" title="Modifier">✏️</button>` : ''}
+        ${!isAdminUser ? `<button class="btn btn-sm ${u.actif?'btn-danger':'btn-success'}" onclick="toggleVendeur(${u.id})" title="${u.actif?'Désactiver':'Activer'}">${u.actif?'🔒':'🔓'}</button>` : ''}
+        ${!isAdminUser && !isSelf ? `<button class="btn btn-danger btn-sm" onclick="supprimerVendeur(${u.id})" title="Supprimer">🗑</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function resetVendeurForm() {
+  document.getElementById('v-nom').value = '';
+  document.getElementById('v-login').value = '';
+  document.getElementById('v-pass').value = '';
+  document.getElementById('v-pass2').value = '';
+  document.getElementById('v-edit-id').value = '';
+  document.getElementById('vendeur-form-titre').textContent = '➕ Nouveau vendeur';
+  document.getElementById('v-login').disabled = false;
+}
+
+function sauvegarderVendeur() {
+  const nom = document.getElementById('v-nom').value.trim();
+  const login = document.getElementById('v-login').value.trim().toLowerCase();
+  const pass = document.getElementById('v-pass').value;
+  const pass2 = document.getElementById('v-pass2').value;
+  const editId = parseInt(document.getElementById('v-edit-id').value) || null;
+
+  if (!nom || !login) { toast('Nom et identifiant sont obligatoires', true); return; }
+  if (!editId && !pass) { toast('Le mot de passe est obligatoire', true); return; }
+  if (pass && pass !== pass2) { toast('Les mots de passe ne correspondent pas', true); return; }
+  if (pass && pass.length < 4) { toast('Mot de passe trop court (min. 4 caractères)', true); return; }
+
+  const users = AUTH.getUsers();
+
+  if (editId) {
+    const idx = users.findIndex(u => u.id === editId);
+    if (idx === -1) return;
+    users[idx].nom = nom;
+    if (pass) users[idx].password = pass;
+    AUTH.setUsers(users);
+    toast(`✅ Vendeur "${nom}" modifié !`);
+  } else {
+    if (!/^[a-z0-9_]+$/.test(login)) { toast('Login : lettres minuscules, chiffres et _ uniquement', true); return; }
+    if (users.find(u => u.username === login)) { toast('Cet identifiant est déjà utilisé', true); return; }
+    const newId = users.length ? Math.max(...users.map(u=>u.id))+1 : 1;
+    users.push({ id: newId, username: login, password: pass, role: 'vendeur', nom, actif: true });
+    AUTH.setUsers(users);
+    toast(`✅ Vendeur "${nom}" créé ! Login : ${login}`);
+  }
+
+  resetVendeurForm();
+  reloadVendeurs();
+}
+
+function editVendeur(id) {
+  const users = AUTH.getUsers();
+  const u = users.find(u => u.id === id);
+  if (!u) return;
+  document.getElementById('v-edit-id').value = u.id;
+  document.getElementById('v-nom').value = u.nom;
+  document.getElementById('v-login').value = u.username;
+  document.getElementById('v-login').disabled = true;
+  document.getElementById('v-pass').value = '';
+  document.getElementById('v-pass2').value = '';
+  document.getElementById('vendeur-form-titre').textContent = `✏️ Modifier : ${u.nom}`;
+  document.getElementById('v-nom').scrollIntoView({ behavior: 'smooth' });
+}
+
+function toggleVendeur(id) {
+  const users = AUTH.getUsers();
+  const idx = users.findIndex(u => u.id === id);
+  if (idx === -1) return;
+  users[idx].actif = !users[idx].actif;
+  AUTH.setUsers(users);
+  toast(users[idx].actif ? '🔓 Compte activé' : '🔒 Compte désactivé');
+  reloadVendeurs();
+}
+
+function supprimerVendeur(id) {
+  const users = AUTH.getUsers();
+  const u = users.find(u => u.id === id);
+  if (!u) return;
+  if (!confirm(`Supprimer le compte de "${u.nom}" (${u.username}) ?`)) return;
+  AUTH.setUsers(users.filter(u => u.id !== id));
+  toast('Vendeur supprimé.');
+  reloadVendeurs();
+}
+
+// ═══════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════
+AUTH.initUsers();
 initData();
-loadAccueil();
-renderPanier();
+checkAlerts();
+
+// Vérifier session existante
+const session = AUTH.getSession();
+if (session) {
+  // Vérifier que l'utilisateur est toujours actif
+  const users = AUTH.getUsers();
+  const userStillActive = users.find(u => u.id === session.id && u.actif);
+  if (userStillActive) {
+    currentUser = userStillActive;
+    document.getElementById('login-screen').classList.add('hidden');
+    initApp();
+  } else {
+    AUTH.clearSession();
+  }
+}
 </script>
 </body>
 </html>
